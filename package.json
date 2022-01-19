@@ -6,8 +6,10 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "normalize.css": "^8.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "web-vitals": "^2.1.3"
   },
@@ -15,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && scp -r ./build/* ilya@51.250.11.126:/home/ilya/movie-client"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +37,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyapopko/movies-explorer-frontend.git/"
+  },
+  "author": "Ilya Popko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilyapopko/movies-explorer-frontend.git/issues/"
+  },
+  "homepage": "/"
 }
