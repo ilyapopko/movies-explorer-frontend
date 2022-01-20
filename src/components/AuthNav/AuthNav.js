@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import iconAccount from '../../images/nav_icon.svg';
 import '../Navigation/Navigation.css';
 
-const AuthNav = () => {
+const AuthNav = ({onBurgerClick}) => {
   return (
     <>
       <nav className="navigation navigation_type_authorized">
@@ -21,7 +21,7 @@ const AuthNav = () => {
           aria-label="Профиль пользователя">Аккаунт
         <img src={iconAccount} alt="Значок аккаунта" className="navigation__icon" />
         </Link>
-      <button className="navigation__button"></button>
+      <button className="navigation__button" onClick={onBurgerClick}></button>
     </>
   );
 };

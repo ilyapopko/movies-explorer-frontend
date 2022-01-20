@@ -6,14 +6,15 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import '../Movies/Movies.css';
 
-const SavedMovies = () => (
+const SavedMovies = ({onFindMovie, onBurgerClick}) => (
   <>
     <Header type="default">
-      <Navigation type="authorized"/>
+      <Navigation type="authorized" onBurgerClick={onBurgerClick}/>
     </Header>
-    <SearchForm />
+    <SearchForm
+      onSubmit={onFindMovie} />
     <section className="movies">
-      <MoviesCardList />
+      <MoviesCardList isSavedMovies={true}/>
     </section>
     <Footer />
   </>

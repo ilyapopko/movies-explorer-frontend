@@ -3,9 +3,12 @@ import AuthNav from '../AuthNav/AuthNav';
 import UnauthNav from '../UnauthNav/UnauthNav';
 import './Navigation.css';
 
-const Navigation = ({ type }) => (
+const Navigation = ({ type, onBurgerClick }) => (
   <>
-    {type === "authorized" ? <AuthNav /> : <UnauthNav />}
+    {type === "authorized" ? (
+      <AuthNav
+        onBurgerClick={onBurgerClick} />
+    ) : <UnauthNav />}
   </>
 );
 

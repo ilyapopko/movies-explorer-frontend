@@ -1,7 +1,5 @@
-// import React, { useState, useEffect } from 'react';
-import React from 'react';
-// import { Switch, Route, Redirect } from 'react-router-dom';
-import { Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -14,46 +12,91 @@ import './App.css';
 
 function App() {
 
-  const handleRegister = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPopupNavOpen, setIsPopupNavOpen] = useState(false);
+
+  const history = useHistory();
+
+  const handleRegister = (evt) => {
+    evt.preventDefault();
     //Этап 4
   };
 
-  const handleLogin = () => {
+  const handleLogin = (evt) => {
     //этап 3 временно для включения признака isLoggedIn
-
+    evt.preventDefault();
+    setIsLoggedIn(true);
+    history.push('/');
     //этап 4
   };
 
-  const handleSaveProfile = () => {
+  const handleLogout = (evt) => {
+    //этап 3 временно для включения признака isLoggedIn
+    evt.preventDefault();
+    setIsLoggedIn(false);
+    history.push('/');
     //этап 4
+  };
+  const handleSaveProfile = (evt) => {
+    evt.preventDefault();
+    //этап 4
+  };
+
+  const handleFindMovie = (evt) => {
+    evt.preventDefault();
+    //этап 4
+  };
+
+  const handleSaveCard = () => {
+    //этап 4
+  };
+
+  const handleDeleteCard = () => {
+    //этап 4
+  };
+
+  const handleBurgerClick = () => {
+    setIsPopupNavOpen(true);
+  };
+
+  const handlePopupClose = () => {
+    setIsPopupNavOpen(false);
   };
 
   return (
     <>
       <Switch>
         <Route exact path="/">
-          <Main/>
+          <Main isLoggedIn={isLoggedIn} onBurgerClick={handleBurgerClick} />
         </Route>
         <Route path="/signin">
-          <Login onSubmit={handleLogin}/>
+          <Login onSubmit={handleLogin} />
         </Route>
         <Route path="/signup">
-          <Register onSubmit={handleRegister}/>
+          <Register onSubmit={handleRegister} />
         </Route>
         <Route path="/movies">
-          <Movies/>
+          <Movies
+            onFindMovie={handleFindMovie}
+            onSaveCard={handleSaveCard}
+            onDeleteCard={handleDeleteCard}
+            onBurgerClick={handleBurgerClick} />
         </Route>
         <Route path="/saved-movies">
-          <SavedMovies/>
+          <SavedMovies
+            onFindMovie={handleFindMovie}
+            onBurgerClick={handleBurgerClick} />
         </Route>
         <Route path="/profile">
-          <Profile onSubmit={handleSaveProfile}/>
+          <Profile onSubmit={handleSaveProfile} onBurgerClick={handleBurgerClick} onLogout={handleLogout} />
         </Route>
         <Route path="*">
-          <NotFound/>
+          <NotFound />
         </Route>
       </Switch>
-      <PopupNav/>
+      <PopupNav
+        isOpen={isPopupNavOpen}
+        onClose={handlePopupClose} />
     </>
   );
 }

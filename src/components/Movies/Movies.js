@@ -6,14 +6,17 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import './Movies.css';
 
-const Movies = () => (
+const Movies = ({ onFindMovie, onSaveCard, onDeleteCard, onBurgerClick }) => (
   <>
     <Header type="default">
-      <Navigation type="authorized"/>
+      <Navigation type="authorized" onBurgerClick={onBurgerClick} />
     </Header>
-    <SearchForm />
+    <SearchForm
+      onSubmit={onFindMovie} />
     <section className="movies">
-      <MoviesCardList />
+      <MoviesCardList
+        onSaveCard={onSaveCard}
+        onDeleteCard={onDeleteCard} />
       <button className="movies__show-more">Ещё</button>
     </section>
     <Footer />

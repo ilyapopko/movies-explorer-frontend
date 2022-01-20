@@ -8,10 +8,12 @@ import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
 
-const Main = () => (
+const Main = ({ isLoggedIn, onBurgerClick }) => (
   <>
     <Header type="main">
-      <Navigation type="unauthorized"/>
+      <Navigation
+        type={!isLoggedIn ? "unauthorized" : "authorized"}
+        onBurgerClick={onBurgerClick} />
     </Header>
     <Promo />
     <AboutProject />
