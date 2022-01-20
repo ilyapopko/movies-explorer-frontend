@@ -35,8 +35,9 @@ function App() {
     history.push('/');
     //этап 4
   };
-  const handleSaveProfile = (evt) => {
-    evt.preventDefault();
+  const handleSaveProfile = () => {
+    setIsLoggedIn(true);
+    history.push('/');
     //этап 4
   };
 
