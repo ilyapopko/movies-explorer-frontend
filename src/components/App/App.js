@@ -1,30 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+// import React, { useState, useEffect } from 'react';
+import React from 'react';
+// import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Main from '../Main/Main';
-import Register from '../Register/Register';
+import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Register from '../Register/Register';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
-import NotFound from '../NotFound/NotFound';
+import PopupNav from '../PopupNav/PopupNav';
 import './App.css';
 
 function App() {
-  return (
-    // <div className="App">
-    //   <h1>Movie explorer</h1>
-    // </div>
+  const handleLogin = () => {
 
+  };
+
+  return (
     <>
       <Switch>
 
         <Route exact path="/">
-          <Main></Main>
+          <Main/>
         </Route>
 
+        <Route path="/signin">
+          <Login onLogin={handleLogin}/>
+        </Route>
+
+        <Route path="/signup">
+          <Register/>
+        </Route>
+
+        <Route path="/movies">
+          <Movies/>
+        </Route>
+
+        <Route path="/saved-movies">
+          <SavedMovies/>
+        </Route>
+
+        <Route path="/profile">
+          <Profile/>
+        </Route>
+
+        <Route path="*">
+          <NotFound/>
+        </Route>
 
       </Switch>
+
+      <PopupNav/>
     </>
   );
 }

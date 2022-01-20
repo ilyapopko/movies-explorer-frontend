@@ -1,11 +1,10 @@
 import React from 'react';
+import AuthComponent from '../AuthComponent/AuthComponent';
 
-const Register = () => {
-  return (
-    <div>
-
-    </div>
-  );
-};
+const Register = () => (
+    <>
+      <AuthComponent />
+    </>
+);
 
 export default Register;

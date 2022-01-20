@@ -1,11 +1,10 @@
 import React from 'react';
+import './Navigation.css';
 
-const Navigation = () => {
-  return (
-    <div>
-
-    </div>
-  );
-};
+const Navigation = ({ children, type }) => (
+    <nav className={`navigation navigation_type_${type}`}>
+      {children}
+    </nav>
+);
 
 export default Navigation;

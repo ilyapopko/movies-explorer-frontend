@@ -8,6 +8,7 @@
 
 .not-found__status {
   margin: 42.18vh 0 10px 0;
+  font-weight: normal;
   font-size: 80px;
   line-height: 97px;
 }

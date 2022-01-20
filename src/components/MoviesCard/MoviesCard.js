@@ -1,11 +1,9 @@
 import React from 'react';
 
-const MoviesCard = () => {
-  return (
+const MoviesCard = () => (
     <div>
 
     </div>
-  );
-};
+);
 
 export default MoviesCard;
