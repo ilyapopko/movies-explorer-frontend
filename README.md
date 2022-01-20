@@ -1,6 +1,3 @@
-# movies-explorer-frontend
-frontend project movies-explorer
-
 # Проект: "Movie Explorer".
 ### Обзор
 Дипломная работа по курсу web-разработчик для Яндекс.Практикума.
