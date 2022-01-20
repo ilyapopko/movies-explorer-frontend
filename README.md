@@ -1,6 +1,31 @@
 # movies-explorer-frontend
 frontend project movies-explorer
 
+# Проект: "Movie Explorer".
+### Обзор
+Дипломная работа по курсу web-разработчик для Яндекс.Практикума.
+Этап 3. Верстка и JSX.
+## Языки разработки
+* HTML
+* CSS
+* JavaScript
+
+## При разработке использованы:
+* Нативная верстка
+* Элементы flexbox
+* Элементы grid
+* Фреймворк React
+* Пакет CRA
+
+## URL сайта (на Yandex.cloud):
+* http://movies-explorer-popko.nomoredomains.rocks
+* https://movies-explorer-popko.nomoredomains.rocks
+## URL сервера (на Yandex.cloud):
+* http://movies-explorer-popko.nomoredomains.rocks/api
+* https://movies-explorer-popko.nomoredomains.rocks/api
+## IP сайта (на Yandex.cloud):
+* [51.250.11.126](https://51.250.11.126)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
