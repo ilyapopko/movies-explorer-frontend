@@ -17,14 +17,12 @@ function App() {
 
   const history = useHistory();
 
-  const handleRegister = (evt) => {
-    evt.preventDefault();
+  const handleRegister = () => {
     //Этап 4
   };
 
-  const handleLogin = (evt) => {
+  const handleLogin = () => {
     //этап 3 временно для включения признака isLoggedIn
-    evt.preventDefault();
     setIsLoggedIn(true);
     history.push('/');
     //этап 4

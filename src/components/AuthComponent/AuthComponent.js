@@ -4,7 +4,7 @@ import EditForm from '../EditForm/EditForm';
 import Header from '../Header/Header';
 import './AuthComponent.css';
 
-const AuthComponent = ({ title, hint, submitHeader, altLink, onSubmit, children }) => (
+const AuthComponent = ({ title, hint, submitHeader, altLink, isSubmitDisabled, onSubmit, children }) => (
   <>
     <Header type="auth" />
     <section className="auth">
@@ -12,6 +12,7 @@ const AuthComponent = ({ title, hint, submitHeader, altLink, onSubmit, children 
         section="auth"
         title={title}
         submitHeader={submitHeader}
+        isSubmitDisabled={isSubmitDisabled}
         onSubmit={onSubmit}>
         {children}
       </EditForm>

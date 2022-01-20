@@ -81,6 +81,11 @@
   transition: opacity .25s ease-in;
 }
 
+.profile__submit:disabled {
+  cursor: auto;
+  opacity: .6;
+}
+
 .profile__signout {
   border: none;
   box-shadow: none;
