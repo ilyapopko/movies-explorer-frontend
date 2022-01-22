@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useFormValidation from '../../hooks/useForm';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import EditForm from '../EditForm/EditForm';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 import './Profile.css';
 
 const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
-
+  const currentUser = useContext(CurrentUserContext);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const { values, handleInputChange, errors, isValid, resetForm } = useFormValidation();
+  const { values, setValues, handleInputChange, errors, isValid, resetForm } = useFormValidation();
 
   useEffect(() => {
     resetForm();
-    setIsSubmitDisabled(true);
-  }, [resetForm]);
+    setValues({ 'name': currentUser.name, 'email': currentUser.email });
+    setIsSubmitDisabled(false);
+  }, [currentUser, setIsSubmitDisabled, setValues, resetForm]);
 
   useEffect(() => {
     setIsSubmitDisabled(!isValid);
@@ -23,7 +25,7 @@ const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsSubmitDisabled(true);
-    onSubmit();
+    onSubmit(values);
     resetForm();
   };
 
@@ -35,7 +37,7 @@ const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
       <section className="profile">
         <EditForm
           section="profile"
-          title="Привет, Виталий!"
+          title={`Привет, ${currentUser.name}`}
           submitHeader="Редактировать"
           isSubmitDisabled={isSubmitDisabled}
           onSubmit={handleSubmit}>
