@@ -42,7 +42,7 @@
   outline: none;
 }
 
-.form__input:invalid:not(:focus) {
+.auth__input:invalid:not(:focus) {
   color: #EE3465;
 }
 

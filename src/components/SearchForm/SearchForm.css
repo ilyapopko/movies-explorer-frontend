@@ -1,4 +1,4 @@
-.search-film {
+.search-form {
   padding: 0 10px 10px 10px;
 }
 
@@ -7,16 +7,16 @@
   border-bottom: 1px solid #424242;
 }
 
-.search-form {
+.search-form__form {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
 }
 
-.search-film__container {
+.search-form__film-container {
   width: 100%;
-  min-height: 40px;
+  min-height: 72px;
   display: flex;
   align-items: center;
   background-color: #222222;
@@ -25,7 +25,7 @@
   margin: 0 0 46px 0;
 }
 
-.search-film__icon {
+.search-form__film-icon {
   min-width: 34px;
   min-height: 34px;
   object-fit: none;
@@ -33,7 +33,7 @@
   display: none;
 }
 
-.search-film__input {
+.search-form__film-input {
   background-color: transparent;
   border: none;
   outline: none;
@@ -46,13 +46,17 @@
   line-height: 20px;
 }
 
-.search-film__input::placeholder {
+.search-form__film-input:focus {
+	border-bottom: 1px solid #3DDC84;
+}
+
+.search-form__film-input::placeholder {
   font-size: 14px;
   line-height: 20px;
   color: #A0A0A0;
 }
 
-.search-film__find {
+.search-form__film-find {
   margin: 0 19px 0 auto;
   padding: 0;
   border: none;
@@ -68,14 +72,14 @@
   transition: opacity .25s ease-in;
 }
 
-.search-film__find:hover {
+.search-form__film-find:hover {
   opacity: .6;
   cursor: pointer;
   transition: opacity .25s ease-in;
 }
 
 @media screen and (min-width: 768px) {
-  .search-film {
+  .search-form {
     padding: 0 30px 10px 30px;
   }
 
@@ -83,7 +87,7 @@
     padding: 80px 0 109px 0;
   }
 
-  .search-form {
+  .search-form__form {
     flex-direction: row;
     margin: 0;
     background-color: #222222;
@@ -92,7 +96,8 @@
     padding: 16px 20px 16px 19px;
   }
 
-  .search-film__container {
+  .search-form__film-container {
+    min-height: 40px;
     margin: 0;
     background-color: transparent;
     box-shadow: none;
@@ -100,22 +105,22 @@
     border-right: 1px solid #505050;
   }
 
-  .search-film__icon {
+  .search-form__film-icon {
     display: block;
   }
 
-  .search-film__input {
+  .search-form__film-input {
     margin: 0 20px 0 10px;
     font-size: 18px;
   }
 
-  .search-film__input::placeholder {
+  .search-form__film-input::placeholder {
     font-size: 18px;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .search-film {
+  .search-form {
     padding: 0 70px 10px 70px;
   }
 
@@ -123,7 +128,7 @@
     padding: 70px 0 69px 0;
   }
 
-  .search-form {
+  .search-form__form {
     padding: 16px 30px 16px 19px;
   }
 }

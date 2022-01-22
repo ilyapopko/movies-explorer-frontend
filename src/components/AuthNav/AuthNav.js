@@ -17,11 +17,11 @@ const AuthNav = ({onBurgerClick}) => {
         </NavLink>
       </nav>
       <Link to="/profile"
-          className="navigation__link navigation__link_type_profile"
+          className="header__link"
           aria-label="Профиль пользователя">Аккаунт
-        <img src={iconAccount} alt="Значок аккаунта" className="navigation__icon" />
+        <img src={iconAccount} alt="Значок аккаунта" className="header__icon" />
         </Link>
-      <button className="navigation__button" onClick={onBurgerClick}></button>
+      <button className="header__button" onClick={onBurgerClick}></button>
     </>
   );
 };

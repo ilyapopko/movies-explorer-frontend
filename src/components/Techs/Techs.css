@@ -5,7 +5,7 @@
 .techs__title {
   padding: 0 0 28px 0;
   margin: 0;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #DADADA;
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
@@ -60,7 +60,6 @@
 
   .techs__title {
     padding: 0 0 23px 0;
-    border-bottom: 1px solid #DADADA;
     font-size: 22px;
     line-height: 27px;
   }

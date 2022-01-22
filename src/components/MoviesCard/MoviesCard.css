@@ -61,11 +61,11 @@
   transition: opacity .25s ease-in;
 }
 
-.movies__card_type_saved {
+.movies__card-save_type_saved {
   background-image: url(../../images/saved_card.svg);
 }
 
-.movies__card_type_delete {
+.movies__card-save_type_delete {
   background-image: url(../../images/delete_card.svg);
 }
 

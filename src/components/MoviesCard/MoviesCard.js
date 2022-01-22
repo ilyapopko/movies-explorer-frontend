@@ -11,8 +11,8 @@ const MoviesCard = ({ title, duration, filePath, isSavedMovies, saved }) => {
         </div>
         <button
           className={`movies__card-save ${!isSavedMovies ?
-              !saved ? '' : 'movies__card_type_saved'
-              : 'movies__card_type_delete'}`}
+              !saved ? '' : 'movies__card-save_type_saved'
+              : 'movies__card-save_type_delete'}`}
           title="Сохранить в профиле"></button>
       </div>
       <img src={filePath} alt="Превью клипа" className="movies__card-picture" />
