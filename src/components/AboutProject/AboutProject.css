@@ -1,0 +1,130 @@
+.about-project {
+  margin: 70px 18px;
+}
+
+.about-project__title {
+  padding-bottom: 28px;
+  border-bottom: 1px solid #DADADA;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -.04em;
+}
+
+.about-project__description {
+  margin: 60px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.about-project__subtitle {
+  margin: 0;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -.04em;
+}
+
+.about-project__text {
+  margin: 16px 0 0 0;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.about-project__chart {
+  display: flex;
+  flex-direction: row;
+}
+
+.about-project__chart-backend {
+  min-width: 25%;
+}
+
+.about-project__chart-frontend {
+  min-width: 75%;
+}
+
+.about-project__chart-subtitle {
+  min-height: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.about-project__chart-subtitle_backend {
+  background-color: #3DDC84;
+  color: #000;
+}
+
+.about-project__chart-subtitle_frontend {
+  background-color: #303030;
+  font-size: 11px;
+}
+
+.about-project__chart-text {
+  margin: 10px 0 0 0;
+  text-align: center;
+  font-size: 11px;
+  color: #A0A0A0;
+}
+
+@media screen and (min-width: 768px) {
+  .about-project {
+    margin: 90px 50px;
+  }
+
+  .about-project__title {
+    padding-bottom: 23px;
+    font-size: 22px;
+    line-height: 27px;
+  }
+
+  .about-project__description {
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+  }
+
+  .about-project__subtitle {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .about-project__text {
+    margin: 22px 0 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__chart-subtitle {
+    min-height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+  }
+
+  .about-project__chart-text {
+    margin: 14px 0 0 0;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .about-project {
+    margin: 110px 70px;
+  }
+
+  .about-project__description {
+    gap: 40px;
+  }
+
+  .about-project__text {
+    margin: 26px 0 0 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .about-project__chart-text {
+    color: #8B8B8B;
+  }
+}

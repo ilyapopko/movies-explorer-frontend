@@ -1,0 +1,125 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navigation_type_authorized {
+  gap: 16px;
+  display: none;
+}
+
+.navigation__link {
+  text-decoration: none;
+  color: #fff;
+  transition: opacity .25s ease-in;
+}
+
+.navigation__link:hover {
+  opacity: .6;
+  cursor: pointer;
+  transition: opacity .25s ease-in;
+}
+
+
+.navigation__link_type_unauthorized {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 16px;
+}
+
+.navigation__link_type_profile {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 30px;
+  justify-content: center;
+  display: none;
+}
+
+.navigation__link_type_authorized {
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.navigation__link_active {
+  font-weight: 500;
+}
+
+.navigation__link_type_signin {
+  color: #000;
+  background-color: #3DDC84;
+  min-width: 54px;
+  min-height: 26px;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+}
+
+.navigation__link_type_signin:hover {
+  font-weight: 700;
+}
+
+.navigation__icon {
+  margin: 0 0 0 13px;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 6px;
+  background-color: #313131;
+  object-position: center center;
+  object-fit: none;
+}
+
+.navigation__button {
+  min-width: 40px;
+  min-height: 43px;
+  border:none;
+  padding: 0;
+  background-image: url(../../images/nav_icon_burger.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: center center;
+  background-color: transparent;
+  background-size: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .navigation {
+    gap: 30px;
+  }
+
+  .navigation__link_type_unauthorized {
+    font-size: 12px;
+  }
+
+  .navigation__link_type_authorized {
+    font-size: 13px;
+  }
+
+  .navigation__link_type_signin {
+    min-width: 76px;
+    min-height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+  }
+
+  .navigation__button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .navigation_type_authorized {
+    display: flex;
+  }
+
+  .navigation__link_type_profile {
+    display: flex;
+  }
+
+  .navigation__button {
+    display: none;
+  }
+}
