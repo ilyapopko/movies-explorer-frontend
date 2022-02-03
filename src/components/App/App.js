@@ -11,6 +11,7 @@ import PopupNav from '../PopupNav/PopupNav';
 import PopupInfo from '../PopupInfo/PopupInfo';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { userApi } from "../../utils/MainApi";
+import { moviesApi } from "../../utils/MoviesApi";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import './App.css';
 
@@ -21,6 +22,8 @@ function App() {
   const [isPopupNavOpen, setIsPopupNavOpen] = useState(false);
   const [infoMessage, setInfoMessage] = useState();
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
+
+  const [cachedMovies, setCachedMovies] = useState([]);
 
   const history = useHistory();
 
@@ -60,7 +63,7 @@ function App() {
         setCurrentUser(data.user);
         setIsLoggedIn(true);
         history.push('/');
-        setInfoMessage({ message: "Вы успешно авторизировались!", fail: false });
+        setInfoMessage({ message: "Вы успешно авторизовались!", fail: false });
       })
       .catch(showError);
   };
@@ -88,9 +91,53 @@ function App() {
       .catch(showError);
   };
 
-  const handleFindMovie = (evt) => {
-    evt.preventDefault();
+  const handleFindMovie = (textFilter, onlyShortFilms) => {
+    // evt.preventDefault();
     //этап 4
+
+    // setIsLoading(true);
+    // setIsFetched(true);
+    console.log(textFilter,onlyShortFilms);
+
+    let listMovies = localStorage.getItem('cachedMovies');
+
+    if (!listMovies) {
+      // const allMovies =
+      moviesApi.getAllMovies()
+      .then((data) => {
+        console.log("this is data",data);
+
+        localStorage.setItem('cachedMovies', JSON.stringify(data));
+
+      })
+      .catch(showError);
+    } else {
+      console.log("this is list",listMovies);
+    }
+
+      setCachedMovies(listMovies);
+
+    // try {
+    //   let movies = localStorage.getItem('movies');
+
+    //   if (!movies) {
+    //     const fetchedMovies = await moviesApi.getMovies();
+    //     const formattedFetchedMovies = reformatMovies(fetchedMovies, moviesApi.BASE_URL);
+
+    //     localStorage.setItem('movies', JSON.stringify(formattedFetchedMovies));
+    //     movies = formattedFetchedMovies;
+    //   } else {
+    //     movies = JSON.parse(movies);
+    //   }
+    //   const filteredMovies = searchByKeyword(movies, keyword, isIncludesShort);
+
+    //   setSearchedMovies(filteredMovies);
+    //   localStorage.setItem('searchedMovies', JSON.stringify(filteredMovies));
+    // } catch (err) {
+    //   showError(fetchErrorMessage);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   const handleSaveCard = () => {
@@ -130,6 +177,7 @@ function App() {
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/movies">
               <Movies
+                movies={cachedMovies}
                 onFindMovie={handleFindMovie}
                 onSaveCard={handleSaveCard}
                 onDeleteCard={handleDeleteCard}
@@ -138,6 +186,7 @@ function App() {
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
               <SavedMovies
+                movies={cachedMovies}
                 onFindMovie={handleFindMovie}
                 onBurgerClick={handleBurgerClick} />
             </ProtectedRoute>

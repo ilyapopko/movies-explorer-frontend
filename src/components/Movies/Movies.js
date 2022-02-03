@@ -6,12 +6,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import './Movies.css';
 
-const Movies = ({ onFindMovie, onSaveCard, onDeleteCard, onBurgerClick }) => (
+const Movies = ({ movies, onFindMovie, onSaveCard, onDeleteCard, onBurgerClick }) => (
   <>
     <Header type="default">
       <Navigation type="authorized" onBurgerClick={onBurgerClick} />
     </Header>
     <SearchForm
+      movies={movies}
       onSubmit={onFindMovie} />
     <section className="movies">
       <MoviesCardList
