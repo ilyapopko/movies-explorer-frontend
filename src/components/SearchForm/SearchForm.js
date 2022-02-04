@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import useFormValidation from '../../hooks/useForm';
-// import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import iconSearch from '../../images/search.svg';
 
 import './SearchForm.css';
@@ -9,7 +8,6 @@ const SearchForm = ({ movies, onSubmit }) => {
 
   const { values, handleInputChange, errors, isValid, resetForm } = useFormValidation();
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  // const [textFilter, setTextFilter] = useState();
   const [onlyShortFilms, setOnlyShortFilms] = useState(false);
 
   useEffect(() => {
@@ -35,7 +33,7 @@ const SearchForm = ({ movies, onSubmit }) => {
           <div className="search-form__film-container">
             <img src={iconSearch} alt="Значок с лупой" className="search-form__film-icon" />
             <input value={values.textFilter || ''} className="search-form__film-input"
-              name="textFilter" type="text" placeholder="Фильм" required  minLength="2" onChange={handleInputChange} />
+              name="textFilter" type="text" placeholder="Фильм" required  minLength="1" onChange={handleInputChange} />
             <button className="search-form__film-find" type="submit" disabled={isSubmitDisabled}>Найти</button>
           </div>
           <div className="search-form__checkbox-container">

@@ -69,7 +69,7 @@ class MainApi {
       });
   }
 
-  getSavedCards() {
+  getMovies() {
     return fetch(`${this._url}/movies`, {
       method: 'GET',
       headers: this._headers,
@@ -80,20 +80,32 @@ class MainApi {
       });
   }
 
-  saveCard(data) {
-    return fetch(`${this._url}/cards`, {
+  saveMovie(data) {
+    return fetch(`${this._url}/movies`, {
       method: 'POST',
       headers: this._headers,
       credentials: this._credentials,
-      body: JSON.stringify({name: data.name, link: data.link})
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        movieId: data.movieId,
+        image: data.image,
+        trailer: data.trailer,
+        thumbnail: data.thumbnail,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      })
     })
       .then(result => {
         return this._processingResult(result);
       });
   }
 
-  deleteCard(idCard) {
-    return fetch(`${this._url}/cards/${idCard}`, {
+  deleteMovie(movieId) {
+    return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: this._credentials,

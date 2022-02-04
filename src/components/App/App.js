@@ -13,6 +13,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { userApi } from "../../utils/MainApi";
 import { moviesApi } from "../../utils/MoviesApi";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { refactoringData, findMoviesByKeyword } from '../../utils/utils';
 import './App.css';
 
 function App() {
@@ -23,7 +24,12 @@ function App() {
   const [infoMessage, setInfoMessage] = useState();
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
 
-  const [cachedMovies, setCachedMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isSearching, setIsSearching] = useState(false);
+  const [listFoundMovies, setListFoundMovies] = useState([]);
+
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const history = useHistory();
 
@@ -40,6 +46,18 @@ function App() {
       })
       .finally(() => setIsAuthChecking(false));
   }, []);
+
+  useEffect(() => {
+    userApi.getMovies()
+      .then((data) => {
+        setSavedMovies(data);
+      })
+      .catch((err) => {
+        showError(err);
+      });
+
+  }, [isLoggedIn]);
+
 
 
   const showError = (err) => {
@@ -77,6 +95,9 @@ function App() {
       .finally(() => {
         setCurrentUser({ name: "", email: "" });
         setIsLoggedIn(false);
+        setListFoundMovies([]);
+        setIsSearching(false);
+        localStorage.clear();
         history.push('/');
       });
   };
@@ -92,60 +113,45 @@ function App() {
   };
 
   const handleFindMovie = (textFilter, onlyShortFilms) => {
-    // evt.preventDefault();
-    //этап 4
 
-    // setIsLoading(true);
-    // setIsFetched(true);
-    console.log(textFilter,onlyShortFilms);
+    setIsLoading(true);
+    setIsSearching(true);
 
-    let listMovies = localStorage.getItem('cachedMovies');
+    try {
+      let allMovies = localStorage.getItem('cachedMovies');
 
-    if (!listMovies) {
-      // const allMovies =
-      moviesApi.getAllMovies()
+      if (!allMovies) {
+        moviesApi.getAllMovies()
+          .then((data) => {
+            allMovies = refactoringData(data);
+            localStorage.setItem('cachedMovies', JSON.stringify(allMovies));
+          })
+          .catch(showError);
+      } else {
+        allMovies = JSON.parse(allMovies);
+      }
+      setListFoundMovies(findMoviesByKeyword(allMovies, textFilter, onlyShortFilms));
+    } catch (err) {
+      showError(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveMovie = (movie) => {
+    userApi.saveMovie(movie)
       .then((data) => {
-        console.log("this is data",data);
-
-        localStorage.setItem('cachedMovies', JSON.stringify(data));
-
+        setSavedMovies([...savedMovies, data]);
       })
       .catch(showError);
-    } else {
-      console.log("this is list",listMovies);
-    }
-
-      setCachedMovies(listMovies);
-
-    // try {
-    //   let movies = localStorage.getItem('movies');
-
-    //   if (!movies) {
-    //     const fetchedMovies = await moviesApi.getMovies();
-    //     const formattedFetchedMovies = reformatMovies(fetchedMovies, moviesApi.BASE_URL);
-
-    //     localStorage.setItem('movies', JSON.stringify(formattedFetchedMovies));
-    //     movies = formattedFetchedMovies;
-    //   } else {
-    //     movies = JSON.parse(movies);
-    //   }
-    //   const filteredMovies = searchByKeyword(movies, keyword, isIncludesShort);
-
-    //   setSearchedMovies(filteredMovies);
-    //   localStorage.setItem('searchedMovies', JSON.stringify(filteredMovies));
-    // } catch (err) {
-    //   showError(fetchErrorMessage);
-    // } finally {
-    //   setIsLoading(false);
-    // }
   };
 
-  const handleSaveCard = () => {
-    //этап 4
-  };
-
-  const handleDeleteCard = () => {
-    //этап 4
+  const handleDeleteMovie = (saveId, movieId) => {
+    userApi.deleteMovie(saveId)
+    .then((data) => {
+      setSavedMovies(savedMovies.filter(movie => movie.movieId !== movieId));
+    })
+    .catch(showError);
   };
 
   const handleBurgerClick = () => {
@@ -177,16 +183,22 @@ function App() {
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/movies">
               <Movies
-                movies={cachedMovies}
+                isLoading={isLoading}
+                isSearching={isSearching}
+                movies={listFoundMovies}
+                savedMovies={savedMovies}
                 onFindMovie={handleFindMovie}
-                onSaveCard={handleSaveCard}
-                onDeleteCard={handleDeleteCard}
+                onSaveMovie={handleSaveMovie}
+                onDeleteMovie={handleDeleteMovie}
                 onBurgerClick={handleBurgerClick} />
             </ProtectedRoute>
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
               <SavedMovies
-                movies={cachedMovies}
+                movies={savedMovies}
+                savedMovies={savedMovies}
+                isSearching={isSearching}
+                onDeleteMovie={handleDeleteMovie}
                 onFindMovie={handleFindMovie}
                 onBurgerClick={handleBurgerClick} />
             </ProtectedRoute>
