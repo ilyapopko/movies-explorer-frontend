@@ -40,7 +40,9 @@ function App() {
         setIsLoggedIn(true);
       })
       .catch((err) => {
-        showError(err);
+        if (err.status !== 401) {
+          showError(err);
+        }
       })
       .finally(() => setIsAuthChecking(false));
   }, []);
