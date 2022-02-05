@@ -46,7 +46,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    userApi.getMovies()
+    if (isLoggedIn) {
+      userApi.getMovies()
       .then((data) => {
         setSavedMovies(data);
         setListFoundSavedMovies(data);
@@ -54,7 +55,6 @@ function App() {
       .catch((err) => {
         showError(err);
       });
-    if (isLoggedIn) {
       const foundMovies = localStorage.getItem("foundMovies");
       if (foundMovies) {
         setListFoundMovies(JSON.parse(foundMovies));
