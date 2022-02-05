@@ -19,7 +19,7 @@ const Register = ({ onSubmit }) => {
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsSubmitDisabled(true);
-    onSubmit();
+    onSubmit(values);
     resetForm();
   };
 
