@@ -63,7 +63,6 @@ function App() {
   }, [isLoggedIn]);
 
   const showError = (err) => {
-    console.log(err);
     setInfoMessage({
       message: `Что-то пошло не так! ${err.status} ${err.message}`,
       fail: true
