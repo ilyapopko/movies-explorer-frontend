@@ -3,7 +3,7 @@ export const formatDuration = (duration) => {
 
   const hours = Math.floor(duration / 60);
   const minutes = duration - (hours * 60);
-  return hours === 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+  return hours !== 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
 
 }
 export const refactoringData = (dataList) => {
@@ -27,7 +27,7 @@ export const findMoviesByKeyword = (allDataList, keyword, onlyShort) => {
 
   return allDataList.filter((data) =>
     data.nameRU.toLowerCase().includes(keyword.toLowerCase())
-      & (!onlyShort || onlyShort & data.duration <= shortDuration ? true : false) ? true : false
+      & (!onlyShort || data.duration <= shortDuration ? true : false) ? true : false
   );
 }
 

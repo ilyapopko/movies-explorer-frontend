@@ -8,27 +8,22 @@ import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
 const Movies = ({ isLoading, isSearching, movies, savedMovies, onFindMovie, onSaveMovie, onDeleteMovie, onBurgerClick }) => {
-
   return (
     <>
       <Header type="default">
         <Navigation type="authorized" onBurgerClick={onBurgerClick} />
       </Header>
-      <SearchForm
-        onSubmit={onFindMovie} />
+      <SearchForm onSubmit={onFindMovie} />
       {isLoading && <Preloader />}
-      {isSearching & !!movies & movies.length === 0 ? <p className="movies__error">Ничего не найдено</p> : ''}
+      {!isLoading & isSearching & !!movies & movies.length === 0 ? <p className="movies__error">Ничего не найдено</p> : ''}
       <section className="movies">
-        {!!movies & movies.length !== 0 ?
-          <>
-            <MoviesCardList
-              movies={movies}
-              isSavedMovies={false}
-              savedMovies={savedMovies}
-              onSaveMovie={onSaveMovie}
-              onDeleteMovie={onDeleteMovie} />
-            <button className="movies__show-more">Ещё</button>
-          </>
+        {!isLoading & !!movies & movies.length !== 0 ?
+          <MoviesCardList
+            movies={movies}
+            isSavedMovies={false}
+            savedMovies={savedMovies}
+            onSaveMovie={onSaveMovie}
+            onDeleteMovie={onDeleteMovie} />
           : ''}
       </section>
       <Footer />

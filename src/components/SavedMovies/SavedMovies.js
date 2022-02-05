@@ -7,25 +7,20 @@ import Navigation from '../Navigation/Navigation';
 import '../Movies/Movies.css';
 
 const SavedMovies = ({ isSearching, movies, savedMovies, onFindMovie, onDeleteMovie, onBurgerClick }) => {
-
   return (
     <>
       <Header type="default">
         <Navigation type="authorized" onBurgerClick={onBurgerClick} />
       </Header>
-      <SearchForm
-        onSubmit={onFindMovie} />
+      <SearchForm onSubmit={onFindMovie} />
       {isSearching & !!movies & movies.length === 0 ? <p className="movies__error">Ничего не найдено</p> : ''}
       <section className="movies">
         {!!movies & movies.length !== 0 ?
-          <>
-            <MoviesCardList
-              movies={movies}
-              isSavedMovies={true}
-              savedMovies={savedMovies}
-              onDeleteMovie={onDeleteMovie} />
-            <button className="movies__show-more">Ещё</button>
-          </>
+          <MoviesCardList
+            movies={movies}
+            isSavedMovies={true}
+            savedMovies={savedMovies}
+            onDeleteMovie={onDeleteMovie} />
           : ''}
       </section>
       <Footer />

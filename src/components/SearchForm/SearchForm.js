@@ -1,48 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import useFormValidation from '../../hooks/useForm';
+import React, { useState } from 'react';
 import iconSearch from '../../images/search.svg';
 
 import './SearchForm.css';
 
-const SearchForm = ({ movies, onSubmit }) => {
+const SearchForm = ({ onSubmit }) => {
 
-  const { values, handleInputChange, errors, isValid, resetForm } = useFormValidation();
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [onlyShortFilms, setOnlyShortFilms] = useState(false);
+  const [textFilter, setTextFilter] = useState('');
+  const [textFilterError, setTextFilterError] = useState('');
 
-  useEffect(() => {
-    setIsSubmitDisabled(!isValid);
-  }, [isValid]);
+  const handleTextFilterChange = (evt) => {
+    setTextFilter(evt.target.value);
+    if (!evt.target.value) {
+      setTextFilterError('Нужно ввести ключевое слово');
+    } else {
+      setTextFilterError('');
+    };
+  };
 
   const handleCheckboxChange = (evt) => {
     setOnlyShortFilms(evt.target.checked);
+    onSubmit(textFilter, evt.target.checked);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setIsSubmitDisabled(true);
-    onSubmit(values.textFilter, onlyShortFilms);
-    resetForm();
-
+    if (!textFilter) {
+      setTextFilterError('Нужно ввести ключевое слово');
+      return;
+    } else {
+      setTextFilterError('');
+      onSubmit(textFilter, onlyShortFilms);
+    }
   };
 
   return (
     <section className="search-form">
       <div className="search-form__container">
-        <form className="search-form__form" onSubmit={handleSubmit}>
+        <form className="search-form__form" onSubmit={handleSubmit} noValidate>
           <div className="search-form__film-container">
             <img src={iconSearch} alt="Значок с лупой" className="search-form__film-icon" />
-            <input value={values.textFilter || ''} className="search-form__film-input"
-              name="textFilter" type="text" placeholder="Фильм" required  minLength="1" onChange={handleInputChange} />
-            <button className="search-form__film-find" type="submit" disabled={isSubmitDisabled}>Найти</button>
+            <input value={textFilter} className="search-form__film-input"
+              name="textFilter" type="text" placeholder="Фильм" required onChange={handleTextFilterChange} />
+            <button className="search-form__film-find" type="submit" >Найти</button>
           </div>
           <div className="search-form__checkbox-container">
-            <input value={onlyShortFilms} name="onlyShortFilms" className="search-form__checkbox" type="checkbox"
+            <input checked={onlyShortFilms} name="onlyShortFilms" className="search-form__checkbox" type="checkbox"
               onChange={handleCheckboxChange} />
             <p className="search-form__checkbox-label">Короткометражки</p>
           </div>
         </form>
-        <span className="search-form__error search-form__error_active" >{errors.textFilter || ''}</span>
+        <span className="search-form__error search-form__error_active" >{textFilterError}</span>
       </div>
     </section>
   );

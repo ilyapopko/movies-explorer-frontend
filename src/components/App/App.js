@@ -23,12 +23,10 @@ function App() {
   const [isPopupNavOpen, setIsPopupNavOpen] = useState(false);
   const [infoMessage, setInfoMessage] = useState();
   const [currentUser, setCurrentUser] = useState({ name: "", email: "" });
-
   const [isLoading, setIsLoading] = useState(false);
-
   const [isSearching, setIsSearching] = useState(false);
   const [listFoundMovies, setListFoundMovies] = useState([]);
-
+  const [listFoundSavedMovies, setListFoundSavedMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
 
   const history = useHistory();
@@ -51,14 +49,18 @@ function App() {
     userApi.getMovies()
       .then((data) => {
         setSavedMovies(data);
+        setListFoundSavedMovies(data);
       })
       .catch((err) => {
         showError(err);
       });
-
+    if (isLoggedIn) {
+      const foundMovies = localStorage.getItem("foundMovies");
+      if (foundMovies) {
+        setListFoundMovies(JSON.parse(foundMovies));
+      }
+    }
   }, [isLoggedIn]);
-
-
 
   const showError = (err) => {
     console.log(err);
@@ -112,46 +114,57 @@ function App() {
       .catch(showError);
   };
 
-  const handleFindMovie = (textFilter, onlyShortFilms) => {
+  const handleFindMovie = async (textFilter, onlyShortFilms) => {
 
     setIsLoading(true);
     setIsSearching(true);
+    setListFoundMovies([]);
 
     try {
       let allMovies = localStorage.getItem('cachedMovies');
 
       if (!allMovies) {
-        moviesApi.getAllMovies()
-          .then((data) => {
-            allMovies = refactoringData(data);
-            localStorage.setItem('cachedMovies', JSON.stringify(allMovies));
-          })
-          .catch(showError);
+        allMovies = refactoringData(await moviesApi.getAllMovies());
+        localStorage.setItem('cachedMovies', JSON.stringify(allMovies))
       } else {
         allMovies = JSON.parse(allMovies);
       }
-      setListFoundMovies(findMoviesByKeyword(allMovies, textFilter, onlyShortFilms));
+      const foundMovies = findMoviesByKeyword(allMovies, textFilter, onlyShortFilms);
+      setListFoundMovies(foundMovies);
+      localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+
     } catch (err) {
-      showError(err);
-    } finally {
+      showError({
+        ...err,
+        message: 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+      });
+    }
+    finally {
       setIsLoading(false);
     }
+  };
+
+  const handleFindSavedMovie = (textFilter, onlyShortFilms) => {
+    setIsSearching(true);
+    setListFoundSavedMovies(findMoviesByKeyword(savedMovies, textFilter, onlyShortFilms));
   };
 
   const handleSaveMovie = (movie) => {
     userApi.saveMovie(movie)
       .then((data) => {
         setSavedMovies([...savedMovies, data]);
+        setListFoundSavedMovies([...savedMovies, data]);
       })
       .catch(showError);
   };
 
   const handleDeleteMovie = (saveId, movieId) => {
     userApi.deleteMovie(saveId)
-    .then((data) => {
-      setSavedMovies(savedMovies.filter(movie => movie.movieId !== movieId));
-    })
-    .catch(showError);
+      .then((data) => {
+        setSavedMovies(savedMovies.filter(movie => movie.movieId !== movieId));
+        setListFoundSavedMovies(listFoundSavedMovies.filter(movie => movie.movieId !== movieId));
+      })
+      .catch(showError);
   };
 
   const handleBurgerClick = () => {
@@ -195,11 +208,11 @@ function App() {
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
               <SavedMovies
-                movies={savedMovies}
+                movies={listFoundSavedMovies}
                 savedMovies={savedMovies}
                 isSearching={isSearching}
                 onDeleteMovie={handleDeleteMovie}
-                onFindMovie={handleFindMovie}
+                onFindMovie={handleFindSavedMovie}
                 onBurgerClick={handleBurgerClick} />
             </ProtectedRoute>
 
