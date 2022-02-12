@@ -22,10 +22,10 @@ export const refactoringData = (dataList) => {
 export const findMoviesByKeyword = (allDataList, keyword, onlyShort) => {
   const shortDuration = onlyShort ? 40 : 0;
 
-  if (!allDataList)
-    return [];
+  if (!allDataList) {
+    return []};
 
-  if (keyword === '') {
+  if (keyword === '' || keyword === null || keyword === undefined) {
     return allDataList.filter((data) =>
       !onlyShort || data.duration <= shortDuration ? true : false);
   }

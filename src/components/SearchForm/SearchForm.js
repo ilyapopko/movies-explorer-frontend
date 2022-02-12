@@ -7,18 +7,13 @@ import './SearchForm.css';
 const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
 
   const location = useLocation();
-  const [onlyShortFilms, setOnlyShortFilms] = useState(false);
-  const [textFilter, setTextFilter] = useState('');
+  const [onlyShortFilms, setOnlyShortFilms] = useState(isShortFilms);
+  const [textFilter, setTextFilter] = useState(savedFilter || '');
   const [textFilterError, setTextFilterError] = useState('');
 
   const isFormValid = (filter) => {
     return location.pathname !== '/saved-movies' & !filter ? false : true;
   };
-
-  useEffect(() => {
-    setOnlyShortFilms(isShortFilms);
-    setTextFilter(savedFilter);
-  }, [isShortFilms, savedFilter]);
 
   const handleTextFilterChange = (evt) => {
     setTextFilter(evt.target.value);
@@ -55,7 +50,7 @@ const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
         <form className="search-form__form" onSubmit={handleSubmit} noValidate>
           <div className="search-form__film-container">
             <img src={iconSearch} alt="Значок с лупой" className="search-form__film-icon" />
-            <input value={textFilter || ''} className="search-form__film-input"
+            <input value={textFilter} className="search-form__film-input"
               name="textFilter" type="text" placeholder="Фильм" required onChange={handleTextFilterChange} />
             <button className="search-form__film-find" type="submit" >Найти</button>
           </div>
