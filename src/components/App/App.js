@@ -73,18 +73,17 @@ function App() {
   const handleRegister = ({ name, email, password }) => {
     userApi.register({ name, email, password })
       .then(() => {
-        history.push('/signin');
-        setInfoMessage({ message: "Вы успешно зарегистрировались!", fail: false });
+        handleLogin({ email, password }, "Вы успешно зарегистрировались!");
       })
       .catch(showError);
   };
-  const handleLogin = ({ email, password }) => {
+  const handleLogin = ({ email, password }, message) => {
     userApi.authorize({ email, password })
       .then((data) => {
         setCurrentUser(data.user);
         setIsLoggedIn(true);
-        history.push('/');
-        setInfoMessage({ message: "Вы успешно авторизовались!", fail: false });
+        history.push('/movies');
+        setInfoMessage({ message: !message ? "Вы успешно авторизовались!" : message, fail: false });
       })
       .catch(showError);
   };
