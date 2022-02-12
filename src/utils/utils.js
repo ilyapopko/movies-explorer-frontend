@@ -27,7 +27,7 @@ export const findMoviesByKeyword = (allDataList, keyword, onlyShort) => {
 
   if (keyword === '') {
     return allDataList.filter((data) =>
-      !onlyShort || data.duration <= shortDuration ? true : false ? true : false);
+      !onlyShort || data.duration <= shortDuration ? true : false);
   }
 
   return allDataList.filter((data) =>
