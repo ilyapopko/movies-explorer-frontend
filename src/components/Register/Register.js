@@ -35,7 +35,7 @@ const Register = ({ onSubmit }) => {
 
         <label className="auth__label" htmlFor="name">Имя</label>
         <input value={values.name || ''} className="auth__input" name="name" id="name" type="text"
-          minLength="2" maxLength="30" required onChange={handleInputChange} />
+          minLength="2" maxLength="30" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" required onChange={handleInputChange} />
         <span className="auth__error auth__error_active">{errors.name || ''}</span>
 
         <label className="auth__label" htmlFor="email">E-mail</label>

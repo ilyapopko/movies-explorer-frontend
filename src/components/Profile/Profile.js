@@ -45,7 +45,7 @@ const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
             <div className="profile__input-container">
               <label className="profile__label" htmlFor="name">Имя</label>
               <input value={values.name || ''} className="profile__input" name="name" id="name" type="text"
-                minLength="2" maxLength="30" required onChange={handleInputChange} />
+                minLength="2" maxLength="30" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" required onChange={handleInputChange} />
             </div>
             <span className="profile__error profile__error_active">{errors.name || ''}</span>
           </div>
