@@ -31,20 +31,21 @@ function App() {
 
   const history = useHistory();
 
-
   useEffect(() => {
-    setIsAuthChecking(true);
     userApi.getUserProperties()
       .then((userData) => {
         setCurrentUser(userData);
         setIsLoggedIn(true);
       })
       .catch((err) => {
+        setIsLoggedIn(false);
         if (err.status !== 401) {
           showError(err);
         }
       })
-      .finally(() => setIsAuthChecking(false));
+      .finally(() => {
+        setIsAuthChecking(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -91,17 +92,15 @@ function App() {
   const handleLogout = () => {
     userApi.logout()
       .then((data) => {
-        setInfoMessage({ message: data.message, fail: false })
-      })
-      .catch(showError)
-      .finally(() => {
-        setCurrentUser({ name: "", email: "" });
         setIsLoggedIn(false);
+        setCurrentUser({ name: "", email: "" });
         setListFoundMovies([]);
         setIsSearching(false);
         localStorage.clear();
         history.push('/');
-      });
+        setInfoMessage({ message: data.message, fail: false })
+      })
+      .catch(showError);
   };
 
   const handleUpdateProfile = ({ name, email }) => {
@@ -160,7 +159,7 @@ function App() {
 
   const handleDeleteMovie = (saveId, movieId) => {
     userApi.deleteMovie(saveId)
-      .then((data) => {
+      .then(() => {
         setSavedMovies(savedMovies.filter(movie => movie.movieId !== movieId));
         setListFoundSavedMovies(listFoundSavedMovies.filter(movie => movie.movieId !== movieId));
       })
