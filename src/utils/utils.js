@@ -25,6 +25,11 @@ export const findMoviesByKeyword = (allDataList, keyword, onlyShort) => {
   if (!allDataList)
     return [];
 
+  if (keyword === '') {
+    return allDataList.filter((data) =>
+      !onlyShort || data.duration <= shortDuration ? true : false ? true : false);
+  }
+
   return allDataList.filter((data) =>
     data.nameRU.toLowerCase().includes(keyword.toLowerCase())
       & (!onlyShort || data.duration <= shortDuration ? true : false) ? true : false

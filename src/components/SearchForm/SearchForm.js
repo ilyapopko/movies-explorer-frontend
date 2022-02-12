@@ -1,36 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import iconSearch from '../../images/search.svg';
 
 import './SearchForm.css';
 
-const SearchForm = ({ onSubmit }) => {
+const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
 
+  const location = useLocation();
   const [onlyShortFilms, setOnlyShortFilms] = useState(false);
   const [textFilter, setTextFilter] = useState('');
   const [textFilterError, setTextFilterError] = useState('');
 
+  const isFormValid = (filter) => {
+    return location.pathname !== '/saved-movies' & !filter ? false : true;
+  };
+
+  useEffect(() => {
+    setOnlyShortFilms(isShortFilms);
+    setTextFilter(savedFilter);
+  }, [isShortFilms, savedFilter]);
+
   const handleTextFilterChange = (evt) => {
     setTextFilter(evt.target.value);
-    if (!evt.target.value) {
-      setTextFilterError('Нужно ввести ключевое слово');
-    } else {
+    if (isFormValid(evt.target.value)) {
       setTextFilterError('');
-    };
+    } else {
+      setTextFilterError('Нужно ввести ключевое слово');
+    }
   };
 
   const handleCheckboxChange = (evt) => {
     setOnlyShortFilms(evt.target.checked);
-    onSubmit(textFilter, evt.target.checked);
+    if (isFormValid(textFilter)) {
+      setTextFilterError('');
+      onSubmit(textFilter, evt.target.checked);
+    } else {
+      setTextFilterError('Нужно ввести ключевое слово');
+    }
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (!textFilter) {
-      setTextFilterError('Нужно ввести ключевое слово');
-      return;
-    } else {
+    if (isFormValid(textFilter)) {
       setTextFilterError('');
       onSubmit(textFilter, onlyShortFilms);
+    } else {
+      setTextFilterError('Нужно ввести ключевое слово');
     }
   };
 
@@ -40,7 +55,7 @@ const SearchForm = ({ onSubmit }) => {
         <form className="search-form__form" onSubmit={handleSubmit} noValidate>
           <div className="search-form__film-container">
             <img src={iconSearch} alt="Значок с лупой" className="search-form__film-icon" />
-            <input value={textFilter} className="search-form__film-input"
+            <input value={textFilter || ''} className="search-form__film-input"
               name="textFilter" type="text" placeholder="Фильм" required onChange={handleTextFilterChange} />
             <button className="search-form__film-find" type="submit" >Найти</button>
           </div>

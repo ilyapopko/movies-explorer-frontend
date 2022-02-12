@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -28,6 +28,10 @@ function App() {
   const [listFoundMovies, setListFoundMovies] = useState([]);
   const [listFoundSavedMovies, setListFoundSavedMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [onlyShortFilms, setOnlyShortFilms] = useState(false);
+  const [savedFilter, setSavedFilter] = useState('');
+  const [onlyShortSavedFilms, setOnlyShortSavedFilms] = useState(false);
+  const [savedFilterSavedFilms, setSavedFilterSavedFilms] = useState('');
 
   const history = useHistory();
 
@@ -51,17 +55,29 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       userApi.getMovies()
-      .then((data) => {
-        setSavedMovies(data);
-        setListFoundSavedMovies(data);
-      })
-      .catch((err) => {
-        showError(err);
-      });
+        .then((data) => {
+          setSavedMovies(data);
+          setListFoundSavedMovies(data);
+        })
+        .catch((err) => {
+          showError(err);
+        });
       const foundMovies = localStorage.getItem("foundMovies");
       if (foundMovies) {
         setListFoundMovies(JSON.parse(foundMovies));
       }
+      const shortFilms = localStorage.getItem("shortFilms");
+      if (shortFilms !== undefined) {
+        setOnlyShortFilms(JSON.parse(shortFilms));
+      }
+      setSavedFilter(localStorage.getItem("savedFilter"));
+
+      const shortSavedFilms = localStorage.getItem("shortSavedFilms");
+      if (shortSavedFilms !== undefined) {
+        setOnlyShortSavedFilms(JSON.parse(shortSavedFilms));
+      }
+      setSavedFilterSavedFilms(localStorage.getItem("savedFilterSavedFilms"));
+
     }
   }, [isLoggedIn]);
 
@@ -113,7 +129,7 @@ function App() {
       .catch(showError);
   };
 
-  const handleFindMovie = async (textFilter, onlyShortFilms) => {
+  const handleFindMovie = async (textFilter, shortFilms) => {
 
     setIsLoading(true);
     setIsSearching(true);
@@ -128,9 +144,15 @@ function App() {
       } else {
         allMovies = JSON.parse(allMovies);
       }
-      const foundMovies = findMoviesByKeyword(allMovies, textFilter, onlyShortFilms);
+      const foundMovies = findMoviesByKeyword(allMovies, textFilter, shortFilms);
       setListFoundMovies(foundMovies);
       localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+
+      setSavedFilter(textFilter);
+      localStorage.setItem('savedFilter', textFilter);
+
+      setOnlyShortFilms(shortFilms);
+      localStorage.setItem('shortFilms', shortFilms);
 
     } catch (err) {
       showError({
@@ -143,9 +165,16 @@ function App() {
     }
   };
 
-  const handleFindSavedMovie = (textFilter, onlyShortFilms) => {
+  const handleFindSavedMovie = (textFilter, shortFilms) => {
     setIsSearching(true);
-    setListFoundSavedMovies(findMoviesByKeyword(savedMovies, textFilter, onlyShortFilms));
+    setListFoundSavedMovies(findMoviesByKeyword(savedMovies, textFilter, shortFilms));
+
+    setSavedFilterSavedFilms(textFilter);
+    localStorage.setItem('savedFilterSavedFilms', textFilter);
+
+    setOnlyShortSavedFilms(shortFilms);
+    localStorage.setItem('shortSavedFilms', shortFilms);
+
   };
 
   const handleSaveMovie = (movie) => {
@@ -187,10 +216,10 @@ function App() {
               <Main isLoggedIn={isLoggedIn} onBurgerClick={handleBurgerClick} />
             </Route>
             <Route path="/signin">
-              <Login onSubmit={handleLogin} />
+              {!isLoggedIn ? <Login onSubmit={handleLogin} /> : <Redirect to="/movies" />}
             </Route>
             <Route path="/signup">
-              <Register onSubmit={handleRegister} />
+              {!isLoggedIn ? <Register onSubmit={handleRegister} /> : <Redirect to="/movies" />}
             </Route>
 
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/movies">
@@ -199,6 +228,8 @@ function App() {
                 isSearching={isSearching}
                 movies={listFoundMovies}
                 savedMovies={savedMovies}
+                isShortFilms={onlyShortFilms}
+                savedFilter={savedFilter}
                 onFindMovie={handleFindMovie}
                 onSaveMovie={handleSaveMovie}
                 onDeleteMovie={handleDeleteMovie}
@@ -208,6 +239,8 @@ function App() {
             <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
               <SavedMovies
                 movies={listFoundSavedMovies}
+                isShortFilms={onlyShortSavedFilms}
+                savedFilter={savedFilterSavedFilms}
                 savedMovies={savedMovies}
                 isSearching={isSearching}
                 onDeleteMovie={handleDeleteMovie}

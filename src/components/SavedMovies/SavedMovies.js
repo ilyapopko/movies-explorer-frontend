@@ -6,13 +6,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
 import '../Movies/Movies.css';
 
-const SavedMovies = ({ isSearching, movies, savedMovies, onFindMovie, onDeleteMovie, onBurgerClick }) => {
+const SavedMovies = ({ isSearching, movies, isShortFilms, savedFilter, savedMovies, onFindMovie, onDeleteMovie, onBurgerClick }) => {
   return (
     <>
       <Header type="default">
         <Navigation type="authorized" onBurgerClick={onBurgerClick} />
       </Header>
-      <SearchForm onSubmit={onFindMovie} />
+      <SearchForm onSubmit={onFindMovie} isShortFilms={isShortFilms} savedFilter={savedFilter}/>
       {isSearching & !!movies & movies.length === 0 ? <p className="movies__error">Ничего не найдено</p> : ''}
       <section className="movies">
         {!!movies & movies.length !== 0 ?
