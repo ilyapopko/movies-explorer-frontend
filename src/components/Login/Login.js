@@ -28,6 +28,7 @@ const Login = ({ onSubmit }) => {
       <AuthComponent
         title="Рады видеть!"
         hint="Ещё не зарегистрированы?"
+        link="/signup"
         submitHeader="Войти"
         altLink="Регистрация"
         onSubmit={handleSubmit}

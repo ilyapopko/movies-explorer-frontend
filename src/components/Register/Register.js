@@ -28,6 +28,7 @@ const Register = ({ onSubmit }) => {
       <AuthComponent
         title="Добро пожаловать!"
         hint="Уже зарегистрированы?"
+        link="/signin"
         submitHeader="Зарегистрироваться"
         altLink="Войти"
         isSubmitDisabled={isSubmitDisabled}
