@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AuthComponent from '../AuthComponent/AuthComponent';
 import useFormValidation from '../../hooks/useForm';
+import { EMAIL_PATTERN, NAME_PATTERN} from '../../utils/constants';
 
 const Register = ({ onSubmit }) => {
 
@@ -36,12 +37,12 @@ const Register = ({ onSubmit }) => {
 
         <label className="auth__label" htmlFor="name">Имя</label>
         <input value={values.name || ''} className="auth__input" name="name" id="name" type="text"
-          minLength="2" maxLength="30" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" required onChange={handleInputChange} />
+          minLength="2" maxLength="30" pattern={NAME_PATTERN} required onChange={handleInputChange} />
         <span className="auth__error auth__error_active">{errors.name || ''}</span>
 
         <label className="auth__label" htmlFor="email">E-mail</label>
         <input value={values.email || ''} className="auth__input" name="email" id="email" type="email"
-          required onChange={handleInputChange} />
+          pattern={EMAIL_PATTERN} required onChange={handleInputChange} />
         <span className="auth__error auth__error_active">{errors.email || ''}</span>
 
         <label className="auth__label" htmlFor="password">Пароль</label>

@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
-const maxMoviesCountDesktop = 12;
-const maxMoviesCountTablet = 8;
-const maxMoviesCountMobile = 5;
-const addMoviesCountDesktop = 3;
-const addMoviesCountTablet = 2;
-const addMoviesCountMobile = 2;
+import {
+  MAX_MOVIES_COUNT_DESKTOP,
+  MAX_MOVIES_COUNT_TABLET,
+  MAX_MOVIES_COUNT_MOBILE,
+  ADD_MOVIES_COUNT_DESKTOP,
+  ADD_MOVIES_COUNT_TABLET,
+  ADD_MOVIES_COUNT_MOBILE,
+  MAX_SCREEN_SIZE_MOBILE,
+  MAX_SCREEN_SIZE_TABLET,
+  TIMEOUT_RESIZE
+} from '../../utils/constants';
 
 let checkResize = undefined;
 
@@ -18,15 +23,15 @@ const MoviesCardList = ({ movies, savedMovies, isSavedMovies, onSaveMovie, onDel
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
-    if (screenWidth <= 480) {
-      setMaxMoviesCount(maxMoviesCountMobile);
-      setAddMoviesCount(addMoviesCountMobile);
-    } else if (screenWidth <= 768) {
-      setMaxMoviesCount(maxMoviesCountTablet);
-      setAddMoviesCount(addMoviesCountTablet);
+    if (screenWidth <= MAX_SCREEN_SIZE_MOBILE) {
+      setMaxMoviesCount(MAX_MOVIES_COUNT_MOBILE);
+      setAddMoviesCount(ADD_MOVIES_COUNT_MOBILE);
+    } else if (screenWidth <= MAX_SCREEN_SIZE_TABLET) {
+      setMaxMoviesCount(MAX_MOVIES_COUNT_TABLET);
+      setAddMoviesCount(ADD_MOVIES_COUNT_TABLET);
     } else {
-      setMaxMoviesCount(maxMoviesCountDesktop);
-      setAddMoviesCount(addMoviesCountDesktop);
+      setMaxMoviesCount(MAX_MOVIES_COUNT_DESKTOP);
+      setAddMoviesCount(ADD_MOVIES_COUNT_DESKTOP);
     }
   }, [screenWidth]);
 
@@ -35,13 +40,11 @@ const MoviesCardList = ({ movies, savedMovies, isSavedMovies, onSaveMovie, onDel
     return () => window.removeEventListener('resize', checkingScreenWidth);
   });
 
-
-
   const checkingScreenWidth = () => {
     if (checkResize) {
       clearTimeout(checkResize);
     }
-    checkResize = setTimeout(() => setScreenWidth(window.innerWidth), 300);
+    checkResize = setTimeout(() => setScreenWidth(window.innerWidth), TIMEOUT_RESIZE);
   };
 
   const handleShowMoreClick = () => {

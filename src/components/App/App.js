@@ -123,7 +123,6 @@ function App() {
     userApi.updateUser({ name, email })
       .then((data) => {
         setCurrentUser(data);
-        // history.push('/');
         setInfoMessage({ message: "Профиль обновлен!", fail: false });
       })
       .catch(showError);

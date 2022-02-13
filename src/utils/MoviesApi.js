@@ -1,3 +1,4 @@
+import { PARENT_URL } from './constants';
 class MoviesApi {
   _url
   _headers
@@ -30,7 +31,7 @@ class MoviesApi {
 }
 
 export const moviesApi = new MoviesApi({
-  url: 'https://api.nomoreparties.co',
+  url: PARENT_URL,
   headers: {
     'Content-Type': 'application/json'
   },

@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import EditForm from '../EditForm/EditForm';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import { EMAIL_PATTERN, NAME_PATTERN } from '../../utils/constants';
 
 import './Profile.css';
 
@@ -45,7 +46,7 @@ const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
             <div className="profile__input-container">
               <label className="profile__label" htmlFor="name">Имя</label>
               <input value={values.name || ''} className="profile__input" name="name" id="name" type="text"
-                minLength="2" maxLength="30" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" required onChange={handleInputChange} />
+                minLength="2" maxLength="30" pattern={NAME_PATTERN} required onChange={handleInputChange} />
             </div>
             <span className="profile__error profile__error_active">{errors.name || ''}</span>
           </div>
@@ -53,7 +54,7 @@ const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
             <div className="profile__input-container">
               <label className="profile__label" htmlFor="email">E-mail</label>
               <input value={values.email || ''} className="profile__input" name="email" id="email" type="email"
-                required onChange={handleInputChange} />
+                pattern={EMAIL_PATTERN} required onChange={handleInputChange} />
             </div>
             <span className="profile__error profile__error_active">{errors.email || ''}</span>
           </div>

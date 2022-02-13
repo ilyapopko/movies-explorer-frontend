@@ -1,3 +1,4 @@
+import { MAIN_URL } from './constants';
 class MainApi {
   _url
   _headers
@@ -118,7 +119,7 @@ class MainApi {
 }
 
 export const userApi = new MainApi({
-  url: 'https://movies-explorer-popko.nomoredomains.rocks/api',
+  url: MAIN_URL,
   headers: {
     'Content-Type': 'application/json'
   },
