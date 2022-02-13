@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import useFormValidation from '../../hooks/useForm';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
@@ -11,23 +11,25 @@ import './Profile.css';
 const Profile = ({ onSubmit, onBurgerClick, onLogout }) => {
   const currentUser = useContext(CurrentUserContext);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const { values, setValues, handleInputChange, errors, isValid, resetForm } = useFormValidation();
+  const { values, setValues, handleInputChange, errors, isValid } = useFormValidation();
+
+  const checkStatusSubmit = useCallback(() => {
+    return !isValid || values.name === currentUser.name & values.email === currentUser.email;
+  }, [isValid, values, currentUser]);
 
   useEffect(() => {
-    resetForm();
     setValues({ 'name': currentUser.name, 'email': currentUser.email });
-    setIsSubmitDisabled(false);
-  }, [currentUser, setIsSubmitDisabled, setValues, resetForm]);
+  }, [setValues, currentUser]);
 
   useEffect(() => {
-    setIsSubmitDisabled(!isValid);
-  }, [isValid]);
+    setIsSubmitDisabled(checkStatusSubmit());
+  }, [checkStatusSubmit]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     setIsSubmitDisabled(true);
     onSubmit(values);
-    resetForm();
+    checkStatusSubmit();
   };
 
   return (

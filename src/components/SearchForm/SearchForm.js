@@ -10,6 +10,7 @@ const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
   const [onlyShortFilms, setOnlyShortFilms] = useState(isShortFilms);
   const [textFilter, setTextFilter] = useState(savedFilter || '');
   const [textFilterError, setTextFilterError] = useState('');
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
   const isFormValid = (filter) => {
     return location.pathname !== '/saved-movies' & !filter ? false : true;
@@ -19,14 +20,17 @@ const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
     setTextFilter(evt.target.value);
     if (isFormValid(evt.target.value)) {
       setTextFilterError('');
+      setIsSubmitDisabled(false);
     } else {
       setTextFilterError('Нужно ввести ключевое слово');
+      setIsSubmitDisabled(true);
     }
   };
 
   const handleCheckboxChange = (evt) => {
     setOnlyShortFilms(evt.target.checked);
     if (isFormValid(textFilter)) {
+      setIsSubmitDisabled(true);
       setTextFilterError('');
       onSubmit(textFilter, evt.target.checked);
     } else {
@@ -36,6 +40,7 @@ const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsSubmitDisabled(true);
     if (isFormValid(textFilter)) {
       setTextFilterError('');
       onSubmit(textFilter, onlyShortFilms);
@@ -52,7 +57,7 @@ const SearchForm = ({ onSubmit, isShortFilms, savedFilter }) => {
             <img src={iconSearch} alt="Значок с лупой" className="search-form__film-icon" />
             <input value={textFilter} className="search-form__film-input"
               name="textFilter" type="text" placeholder="Фильм" required onChange={handleTextFilterChange} />
-            <button className="search-form__film-find" type="submit" >Найти</button>
+            <button className="search-form__film-find" type="submit" disabled={isSubmitDisabled}>Найти</button>
           </div>
           <div className="search-form__checkbox-container">
             <input checked={onlyShortFilms} name="onlyShortFilms" className="search-form__checkbox" type="checkbox"
