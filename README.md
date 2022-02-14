@@ -1,7 +1,8 @@
 # Проект: "Movie Explorer".
 ### Обзор
 Дипломная работа по курсу web-разработчик для Яндекс.Практикума.
-Этап 3. Верстка и JSX.
+* Этап 3. Верстка и JSX.
+* Этап 4. React и JS.
 ## Языки разработки
 * HTML
 * CSS
@@ -21,7 +22,7 @@
 * http://movies-explorer-popko.nomoredomains.rocks/api
 * https://movies-explorer-popko.nomoredomains.rocks/api
 ## IP сайта (на Yandex.cloud):
-* [51.250.11.126](https://51.250.11.126)
+* [84.252.129.49](https://84.252.129.49)
 
 # Getting Started with Create React App
 

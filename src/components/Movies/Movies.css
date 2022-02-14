@@ -33,6 +33,15 @@
   visibility: hidden;
 }
 
+.movies__error {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 18px;
+  display: block;
+}
+
 @media screen and (min-width: 768px) {
   .movies {
     padding: 0 30px;

@@ -4,23 +4,31 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Navigation from '../Navigation/Navigation';
+import Preloader from '../Preloader/Preloader';
 import './Movies.css';
 
-const Movies = ({ onFindMovie, onSaveCard, onDeleteCard, onBurgerClick }) => (
-  <>
-    <Header type="default">
-      <Navigation type="authorized" onBurgerClick={onBurgerClick} />
-    </Header>
-    <SearchForm
-      onSubmit={onFindMovie} />
-    <section className="movies">
-      <MoviesCardList
-        onSaveCard={onSaveCard}
-        onDeleteCard={onDeleteCard} />
-      <button className="movies__show-more">Ещё</button>
-    </section>
-    <Footer />
-  </>
-);
+const Movies = ({ isLoading, isSearching, movies, isShortFilms, savedFilter, savedMovies, onFindMovie, onSaveMovie, onDeleteMovie, onBurgerClick }) => {
+  return (
+    <>
+      <Header type="default">
+        <Navigation type="authorized" onBurgerClick={onBurgerClick} />
+      </Header>
+      <SearchForm onSubmit={onFindMovie} isShortFilms={isShortFilms} savedFilter={savedFilter}/>
+      {isLoading && <Preloader />}
+      {!isLoading & isSearching & !!movies & movies.length === 0 ? <p className="movies__error">Ничего не найдено</p> : ''}
+      <section className="movies">
+        {!isLoading & !!movies & movies.length !== 0 ?
+          <MoviesCardList
+            movies={movies}
+            isSavedMovies={false}
+            savedMovies={savedMovies}
+            onSaveMovie={onSaveMovie}
+            onDeleteMovie={onDeleteMovie} />
+          : ''}
+      </section>
+      <Footer />
+    </>
+  );
+};
 
 export default Movies;

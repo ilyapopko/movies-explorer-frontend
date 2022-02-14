@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* ilya@51.250.11.126:/home/ilya/movies-client"
+    "deploy": "npm run build && scp -r ./build/* ilya@84.252.129.49:/home/ilya/movies-client"
   },
   "eslintConfig": {
     "extends": [
